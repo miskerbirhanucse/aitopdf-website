@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upgrade to Pro — AI to PDF</title>
+    <meta
+      name="description"
+      content="Choose your AI to PDF plan. Free, Monthly, or Annual."
+    />
+    <link rel="icon" href="" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <style>
+      :root {
+        --primary: #667eea;
+        --primary-dark: #5a6fd6;
+        --secondary: #764ba2;
+        --white: #ffffff;
+        --off: #f4f5ff;
+        --ink: #6868c9;
+        --muted: #5a5f80;
+        --border: rgba(26, 59, 255, 0.12);
+        --grad: linear-gradient(135deg, #667eea 0%, #5a6fd6 100%);
+        --shadow: 0 20px 60px rgba(26, 59, 255, 0.15);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--off);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 32px;
+      }
+      .nav-inner {
+        max-width: 1140px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 20px;
+        color: var(--ink);
+      }
+      .nav-logo img {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+      .nav-cta {
+        background: var(--grad) !important;
+        color: white !important;
+        padding: 9px 22px;
+        border-radius: 10px;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 14px rgba(26, 59, 255, 0.3);
+      }
+
+      /* ── HERO ── */
+      .hero {
+        padding: 120px 24px 60px;
+        text-align: center;
+        background: linear-gradient(180deg, #eef0ff 0%, var(--off) 100%);
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(
+          ellipse,
+          rgba(26, 59, 255, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 18px;
+        border-radius: 50px;
+        background: white;
+        border: 1px solid var(--border);
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 24px;
+        box-shadow: 0 2px 12px rgba(26, 59, 255, 0.08);
+      }
+      .hero h1 {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: clamp(36px, 5vw, 58px);
+        line-height: 1.1;
+        margin-bottom: 18px;
+      }
+      .hero h1 em {
+        font-style: normal;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .hero p {
+        font-size: 18px;
+        color: var(--muted);
+        max-width: 500px;
+        margin: 0 auto 16px;
+        line-height: 1.7;
+      }
+
+      /* ── TOGGLE ── */
+      .billing-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 50px;
+        padding: 4px;
+        margin: 32px auto 0;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      }
+      .toggle-btn {
+        padding: 10px 28px;
+        border-radius: 50px;
+        border: none;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+        background: transparent;
+        color: var(--muted);
+        position: relative;
+      }
+      .toggle-btn.active {
+        background: var(--grad);
+        color: white;
+        box-shadow: 0 4px 14px rgba(26, 59, 255, 0.3);
+      }
+      .save-badge {
+        position: absolute;
+        top: -10px;
+        right: -8px;
+        background: #764ba2;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 50px;
+        white-space: nowrap;
+      }
+
+      /* ── CARDS ── */
+      .plans-section {
+        padding: 40px 24px 80px;
+      }
+      .plans-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        max-width: 1020px;
+        margin: 0 auto;
+        align-items: start;
+      }
+
+      .plan-card {
+        background: white;
+        border-radius: 24px;
+        border: 1.5px solid var(--border);
+        padding: 40px 32px 36px;
+        position: relative;
+        transition: all 0.3s;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+      }
+      .plan-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 50px rgba(26, 59, 255, 0.1);
+      }
+      .plan-card.featured {
+        background: var(--ink);
+        color: white;
+        border-color: var(--blue);
+        box-shadow: var(--shadow);
+        transform: scale(1.04);
+      }
+      .plan-card.featured:hover {
+        transform: scale(1.04) translateY(-6px);
+      }
+
+      .popular-badge {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--grad);
+        color: white;
+        padding: 5px 20px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        box-shadow: 0 4px 14px rgba(26, 59, 255, 0.4);
+      }
+
+      .plan-name {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+      .plan-card.featured .plan-name {
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      .plan-price {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        margin-bottom: 6px;
+      }
+      .price-amount {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 52px;
+        line-height: 1;
+      }
+      .price-cents {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 28px;
+        align-self: flex-start;
+        margin-top: 10px;
+      }
+      .price-period {
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .plan-card.featured .price-period {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .price-note {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 28px;
+        min-height: 18px;
+      }
+      .plan-card.featured .price-note {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .plan-divider {
+        height: 1px;
+        background: rgba(0, 0, 0, 0.06);
+        margin-bottom: 24px;
+      }
+      .plan-card.featured .plan-divider {
+        background: rgba(148, 160, 216, 0.1);
+      }
+
+      .feature-list {
+        list-style: none;
+        margin-bottom: 32px;
+      }
+      .feature-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        padding: 9px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        line-height: 1.5;
+      }
+      .plan-card.featured .feature-list li {
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+      .feature-list li:last-child {
+        border-bottom: none;
+      }
+      .feat-check {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: white;
+        color: #764ba2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 800;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .feat-cross {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: rgba(234, 238, 248, 0.05);
+        color: #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .plan-card.featured .feat-cross {
+        background: rgba(229, 231, 232, 0.08);
+        color: rgba(88, 159, 221, 0.25);
+      }
+      .feat-text {
+        color: var(--ink);
+      }
+      .plan-card.featured .feat-text {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .feat-text.muted {
+        color: var(--muted);
+      }
+      .plan-card.featured .feat-text.muted {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* CTAs */
+      .plan-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        border-radius: 14px;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: all 0.25s;
+      }
+      .btn-free {
+        background: var(--off);
+        color: var(--blue);
+        border: 1.5px solid var(--border);
+      }
+      .btn-free:hover {
+        background: var(--blue-light);
+      }
+      .btn-pro {
+        background: var(--grad);
+        color: white;
+        box-shadow: 0 6px 20px rgba(26, 59, 255, 0.4);
+      }
+      .btn-pro:hover {
+        box-shadow: 0 10px 30px rgba(26, 59, 255, 0.5);
+        transform: translateY(-1px);
+      }
+      .btn-annual {
+        background: white;
+        color: var(--ink);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+      }
+      .btn-annual:hover {
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      /* ── FEATURE COMPARISON ── */
+      .compare-section {
+        padding: 0 24px 80px;
+      }
+      .compare-section h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 32px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .compare-table {
+        max-width: 860px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+      }
+      .compare-table table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .compare-table th {
+        padding: 18px 24px;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-align: center;
+        background: var(--off);
+      }
+      .compare-table th:first-child {
+        text-align: left;
+      }
+      .compare-table th.highlight {
+        background: var(--ink);
+        color: white;
+      }
+      .compare-table td {
+        padding: 14px 24px;
+        font-size: 14px;
+        color: #555;
+        border-top: 1px solid var(--border);
+        text-align: center;
+      }
+      .compare-table td:first-child {
+        text-align: left;
+        font-weight: 500;
+        color: var(--ink);
+      }
+      .compare-table td.highlight {
+        background: #f8f9ff;
+      }
+      .compare-table tr:hover td {
+        background: #fafbff;
+      }
+      .compare-table tr:hover td.highlight {
+        background: #f0f2ff;
+      }
+      .tick {
+        color: #764ba2;
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .cross {
+        color: #ddd;
+        font-size: 18px;
+      }
+
+      /* ── GUARANTEE ── */
+      .guarantee {
+        max-width: 600px;
+        margin: 0 auto 80px;
+        background: white;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        padding: 32px 40px;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      }
+      .guarantee-icon {
+        font-size: 48px;
+        flex-shrink: 0;
+      }
+      .guarantee h3 {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 6px;
+      }
+      .guarantee p {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* ── FAQ ── */
+      .faq-section {
+        padding: 0 24px 80px;
+      }
+      .faq-section h2 {
+        font-family: "Syne";
+        font-size: 32px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 32px;
+      }
+      .faq-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      .faq-item {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        padding: 20px 24px;
+      }
+      .faq-item h4 {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+      .faq-item p {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        padding: 40px 24px;
+        text-align: center;
+        font-size: 13px;
+        color: var(--muted);
+        border-top: 1px solid var(--border);
+        background: white;
+      }
+      footer a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+
+      /* ── HIDDEN PRICES ── */
+      .monthly-price,
+      .annual-price {
+        display: none;
+      }
+      .show-monthly .monthly-price {
+        display: block;
+      }
+      .show-annual .annual-price {
+        display: block;
+      }
+      .show-monthly .monthly-price-inline {
+        display: inline;
+      }
+      .show-annual .annual-price-inline {
+        display: inline;
+      }
+      .monthly-price-inline,
+      .annual-price-inline {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .plans-grid {
+          grid-template-columns: 1fr;
+        }
+        .plan-card.featured {
+          transform: none;
+        }
+        .plan-card.featured:hover {
+          transform: translateY(-6px);
+        }
+        .faq-grid {
+          grid-template-columns: 1fr;
+        }
+        .guarantee {
+          flex-direction: column;
+          text-align: center;
+        }
+        .nav-links a:not(.nav-cta) {
+          display: none;
+        }
+        .compare-section {
+          overflow-x: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo"> AI to PDF </a>
+        <div class="nav-links">
+          <a href="pricing.html#features">Features</a>
+          <a href="pricing.html#faq">FAQ</a>
+          <a href="#" class="nav-cta">Install Free →</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-eyebrow">⚡ Upgrade Your Workflow</div>
+      <h1>Simple Plans,<br /><em>Powerful Results</em></h1>
+      <p>
+        Start free forever. Upgrade when you need unlimited exports and premium
+        templates.
+      </p>
+    </section>
+
+    <section class="plans-section" id="plansSection">
+      <div class="plans-grid">
+        <!-- FREE -->
+        <div class="plan-card">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">
+            <span class="price-amount">$0</span>
+          </div>
+          <div class="price-period">forever</div>
+          <div class="price-note">No credit card needed</div>
+          <div class="plan-divider"></div>
+          <ul class="feature-list">
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">3 PDF exports / day</span>
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">Basic template</span>
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text"
+                >All AI platforms (ChatGPT, Claude, Gemini…)</span
+              >
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">Code formatting</span>
+            </li>
+            <li>
+              <span class="feat-cross">✗</span
+              ><span class="feat-text muted">Premium templates</span>
+            </li>
+            <li>
+              <span class="feat-cross">✗</span
+              ><span class="feat-text muted">Watermark-free exports</span>
+            </li>
+            <li>
+              <span class="feat-cross">✗</span
+              ><span class="feat-text muted">Custom headers &amp; footers</span>
+            </li>
+            <li>
+              <span class="feat-cross">✗</span
+              ><span class="feat-text muted">Priority support</span>
+            </li>
+          </ul>
+          <a href="#" class="plan-btn btn-free">Install Free</a>
+        </div>
+
+        <!-- PRO MONTHLY / ANNUAL (featured) -->
+        <div class="plan-card featured">
+          <div class="popular-badge">⭐ Most Popular</div>
+          <div class="plan-name">Pro</div>
+
+          <!-- Monthly price -->
+          <div class="monthly-show">
+            <div class="plan-price">
+              <span class="price-amount">$2</span
+              ><span class="price-cents">.99</span>
+            </div>
+            <div class="price-period">per month</div>
+            <div class="price-note">Billed monthly · cancel anytime</div>
+          </div>
+
+          <!-- Annual price -->
+          <div class="annual-show" style="display: none">
+            <div class="plan-price">
+              <span class="price-amount">$24</span>
+            </div>
+            <div class="price-period">per year</div>
+            <div class="price-note">
+              Just $2 / month · save $11.88 vs monthly
+            </div>
+          </div>
+
+          <div class="plan-divider"></div>
+          <ul class="feature-list">
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text"
+                ><strong>Unlimited</strong> PDF exports</span
+              >
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text"
+                ><strong>10+ premium</strong> templates</span
+              >
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">All AI platforms</span>
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">Syntax-highlighted code blocks</span>
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text"><strong>No watermark</strong></span>
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">Custom headers &amp; footers</span>
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text"
+                >Edit title &amp; metadata before export</span
+              >
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">Priority email support</span>
+            </li>
+          </ul>
+
+          <div class="monthly-show">
+            <a
+              href="https://digixpress3.gumroad.com/l/aitopdf-pro-monthly?wanted=true"
+              class="plan-btn btn-pro gumroad-button"
+              >Get Pro Monthly →</a
+            >
+          </div>
+          <div class="annual-show" style="display: none">
+            <a
+              href="https://digixpress3.gumroad.com/l/aitopdf-pro-annual?wanted=true"
+              class="plan-btn btn-annual"
+              >Get Pro Annual →</a
+            >
+          </div>
+        </div>
+
+        <!-- TEAMS (placeholder / coming soon) -->
+        <div class="plan-card">
+          <div class="plan-name">Annual</div>
+
+          <div class="monthly-show">
+            <div class="plan-price">
+              <span class="price-amount">$23</span
+              ><span class="price-cents">.99</span>
+            </div>
+            <div class="price-period">per year</div>
+            <div class="price-note">Billed yearly · cancel anytime</div>
+          </div>
+
+          <div class="price-period">&nbsp;</div>
+          <div class="price-note">Launching Q3 2025</div>
+          <div class="plan-divider"></div>
+          <ul class="feature-list">
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">Everything in Pro</span>
+            </li>
+          </ul>
+          <div class="monthly-show">
+            <a
+              href="https://digixpress3.gumroad.com/l/aitopdf-pro-yearly?wanted=true"
+              class="plan-btn btn-pro gumroad-button"
+              >Get Pro Yearly →</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="compare-section" id="features">
+      <h2>Full Feature Comparison</h2>
+      <div class="compare-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Free</th>
+              <th class="highlight">Pro</th>
+              <th>Teams</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Monthly exports</td>
+              <td>5</td>
+              <td class="highlight" style="font-weight: 700; color: #1a3bff">
+                Unlimited
+              </td>
+              <td>Unlimited</td>
+            </tr>
+            <tr>
+              <td>AI platforms (ChatGPT, Claude, Gemini…)</td>
+              <td><span class="tick">✓</span></td>
+              <td class="highlight"><span class="tick">✓</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Code syntax highlighting</td>
+              <td><span class="tick">✓</span></td>
+              <td class="highlight"><span class="tick">✓</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Basic template</td>
+              <td><span class="tick">✓</span></td>
+              <td class="highlight"><span class="tick">✓</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Premium templates (10+)</td>
+              <td><span class="cross">✗</span></td>
+              <td class="highlight"><span class="tick">✓</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>No watermark</td>
+              <td><span class="cross">✗</span></td>
+              <td class="highlight"><span class="tick">✓</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Custom headers &amp; footers</td>
+              <td><span class="cross">✗</span></td>
+              <td class="highlight"><span class="tick">✓</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Edit title &amp; metadata</td>
+              <td><span class="cross">✗</span></td>
+              <td class="highlight"><span class="tick">✓</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Shared team workspace</td>
+              <td><span class="cross">✗</span></td>
+              <td class="highlight"><span class="cross">✗</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Custom branding / logo</td>
+              <td><span class="cross">✗</span></td>
+              <td class="highlight"><span class="cross">✗</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+            <tr>
+              <td>Priority support</td>
+              <td><span class="cross">✗</span></td>
+              <td class="highlight"><span class="tick">✓</span></td>
+              <td><span class="tick">✓</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- GUARANTEE -->
+    <!-- <div style="padding: 0 24px">
+      <div class="guarantee">
+        <div class="guarantee-icon">🛡️</div>
+        <div>
+          <h3>3-Day Money-Back Guarantee</h3>
+          <p>
+            Not happy within 7 days? Email us at
+            <a href="mailto:support@aitopdf.com">support@aitopdf.com</a> and
+            we'll refund you in full — no questions asked. Your satisfaction is
+            our priority.
+          </p>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+      <h2>Pricing FAQ</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Can I cancel anytime?</h4>
+          <p>
+            Yes. Cancel from your Gumroad account at any time. You keep Pro
+            access until the end of your billing period.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>How do I activate my license?</h4>
+          <p>
+            After purchase, you'll receive a license key by email. Open the
+            extension → Settings → paste the key → Activate. Done.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Is my conversation data private?</h4>
+          <p>
+            100%. Everything runs locally in your browser. Your chat content
+            never touches our servers.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Does the annual plan auto-renew?</h4>
+          <p>
+            Yes, annually. You can cancel renewal anytime from Gumroad before
+            the next billing date.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I switch from monthly to annual?</h4>
+          <p>
+            Yes. Cancel your monthly plan and purchase the annual plan. Contact
+            support if you need a prorated credit.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h4>Do you offer student or team discounts?</h4>
+          <p>
+            Email us at
+            <a href="mailto:support@aitopdf.com">support@aitopdf.com</a> — we're
+            happy to work something out for students, nonprofits, and teams.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        © 2026 AI to PDF · <a href="mailto:support@aitopdf.com">Support</a> ·
+        <a href="privacy.html">Privacy Policy</a> · <a href="#">Terms</a> ·
+        <a href="index.html">Home</a>
+      </p>
+    </footer>
+
+    <script src="https://gumroad.com/js/gumroad.js"></script>
+    <script>
+      function setBilling(mode, btn) {
+        document
+          .querySelectorAll(".toggle-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const isAnnual = mode === "annual";
+        document
+          .querySelectorAll(".monthly-show")
+          .forEach((el) => (el.style.display = isAnnual ? "none" : "block"));
+        document
+          .querySelectorAll(".annual-show")
+          .forEach((el) => (el.style.display = isAnnual ? "block" : "none"));
+      }
+    </script>
+    <script type="text/javascript">
+      var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+      (function () {
+        var s1 = document.createElement("script"),
+          s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = "https://embed.tawk.to/69c2a937fb40191c3834a136/1jkg6a1la";
+        s1.charset = "UTF-8";
+        s1.setAttribute("crossorigin", "*");
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+    </script>
+  </body>
+</html>

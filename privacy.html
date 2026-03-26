@@ -8,10 +8,7 @@
       name="description"
       content="Privacy Policy for AI to PDF Chrome Extension"
     />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>"
-    />
+   
     <style>
       :root {
         --primary: #667eea;
@@ -22,13 +19,11 @@
         --light: #f8f9ff;
         --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       }
-
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-
       body {
         font-family:
           "Segoe UI",
@@ -39,8 +34,6 @@
         color: var(--dark);
         line-height: 1.6;
       }
-
-      /* ── Nav ── */
       nav {
         position: fixed;
         top: 0;
@@ -60,12 +53,21 @@
         height: 64px;
       }
       .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         font-size: 20px;
         font-weight: 800;
         background: var(--gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-decoration: none;
+      }
+      .nav-logo img {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        flex-shrink: 0;
       }
       .nav-links {
         display: flex;
@@ -88,16 +90,7 @@
         padding: 8px 20px;
         border-radius: 8px;
         font-weight: 600 !important;
-        transition:
-          transform 0.2s,
-          box-shadow 0.2s !important;
       }
-      .nav-cta:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 14px rgba(102, 126, 234, 0.4);
-      }
-
-      /* ── Content ── */
       .policy-header {
         padding: 120px 24px 40px;
         text-align: center;
@@ -112,13 +105,11 @@
         color: var(--gray);
         font-size: 15px;
       }
-
       .policy-content {
         max-width: 740px;
         margin: 0 auto;
         padding: 48px 24px 80px;
       }
-
       .policy-content h2 {
         font-size: 22px;
         font-weight: 700;
@@ -130,21 +121,18 @@
       .policy-content h2:first-of-type {
         margin-top: 0;
       }
-
       .policy-content h3 {
         font-size: 17px;
         font-weight: 600;
         margin: 28px 0 12px;
         color: #3d3d5c;
       }
-
       .policy-content p {
         font-size: 15px;
         color: #444;
         margin: 12px 0;
         line-height: 1.8;
       }
-
       .policy-content ul {
         padding-left: 24px;
         margin: 12px 0;
@@ -155,7 +143,6 @@
         margin: 8px 0;
         line-height: 1.7;
       }
-
       .policy-content a {
         color: var(--primary);
         text-decoration: none;
@@ -163,8 +150,6 @@
       .policy-content a:hover {
         text-decoration: underline;
       }
-
-      /* Permission table */
       .perm-table {
         width: 100%;
         border-collapse: collapse;
@@ -193,43 +178,6 @@
         border-radius: 4px;
         font-size: 13px;
       }
-
-      /* Highlight boxes */
-      .do-not-collect {
-        background: #f0fdf4;
-        border: 1px solid #bbf7d0;
-        border-radius: 12px;
-        padding: 20px 24px;
-        margin: 16px 0;
-      }
-      .do-not-collect li {
-        color: #166534;
-      }
-
-      .do-collect {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 12px;
-        padding: 20px 24px;
-        margin: 16px 0;
-      }
-      .do-collect li {
-        color: #1e40af;
-      }
-
-      .third-party {
-        background: #fefce8;
-        border: 1px solid #fef08a;
-        border-radius: 12px;
-        padding: 20px 24px;
-        margin: 16px 0;
-      }
-      .third-party p,
-      .third-party li {
-        color: #713f12;
-      }
-
-      /* ── Footer ── */
       footer {
         padding: 40px 24px;
         text-align: center;
@@ -241,7 +189,6 @@
         color: var(--primary);
         text-decoration: none;
       }
-
       @media (max-width: 640px) {
         .nav-links a:not(.nav-cta) {
           display: none;
@@ -256,88 +203,75 @@
     </style>
   </head>
   <body>
-    <!-- NAV -->
     <nav>
       <div class="nav-inner">
-        <a href="/" class="nav-logo">📄 AI to PDF</a>
+        <a href="/" class="nav-logo"> AI to PDF </a>
         <div class="nav-links">
           <a href="/#features">Features</a>
-          <a href="/#pricing">Pricing</a>
+          <a href="/pricing.html">Pricing</a>
           <a href="/#faq">FAQ</a>
           <a href="#" class="nav-cta">Install Free →</a>
         </div>
       </div>
     </nav>
 
-    <!-- HEADER -->
     <div class="policy-header">
       <h1>🔒 Privacy Policy</h1>
       <p>Last updated: July 2025</p>
     </div>
 
-    <!-- CONTENT -->
     <div class="policy-content">
-      <h2>What AI to PDF Does</h2>
       <p>
-        AI to PDF is a Chrome extension that captures AI chat conversations from
-        your browser and converts them into beautifully formatted PDF documents.
-        <strong>All processing happens locally in your browser.</strong>
+        This Privacy Policy describes how AI to PDF and its affiliates ("AI to
+        PDF", "we", "our" or "us") collect, use, and share information in
+        connection with your use of our websites (including
+        <a href="https://aitopdf.com">https://aitopdf.com</a>), Chrome
+        extension, services, and applications (collectively, the "Services").
+      </p>
+      <p>
+        We may collect and receive information about users of our Services
+        ("users", "you" or "your") from various sources. We recommend reading
+        this Privacy Policy in full. For questions, contact us at
+        <a href="mailto:support@aitopdf.com">support@aitopdf.com</a>.
       </p>
 
-      <h2>Data We Collect</h2>
-
-      <h3>❌ Data we DO NOT collect</h3>
-      <div class="do-not-collect">
-        <ul>
-          <li>
-            We do <strong>NOT</strong> read, store, or transmit your
-            conversations
-          </li>
-          <li>We do <strong>NOT</strong> collect browsing history</li>
-          <li>We do <strong>NOT</strong> track which websites you visit</li>
-          <li>We do <strong>NOT</strong> use analytics or tracking scripts</li>
-          <li>We do <strong>NOT</strong> sell any data to third parties</li>
-          <li>We do <strong>NOT</strong> use cookies</li>
-        </ul>
-      </div>
-
-      <h3>✅ Data processed locally (never leaves your browser)</h3>
-      <div class="do-collect">
-        <ul>
-          <li>
-            Page content is captured <strong>only</strong> when you click the
-            export button
-          </li>
-          <li>
-            Captured content is stored temporarily in local browser storage
-          </li>
-          <li>Content is used solely to generate your PDF</li>
-          <li>No data is sent to our servers — we don't have servers</li>
-        </ul>
-      </div>
-
-      <h3>⚠️ Data sent to third parties</h3>
-      <div class="third-party">
-        <p>
-          <strong>Gumroad (payment processor):</strong> If you purchase a Pro
-          license, your license key is verified against Gumroad's API
-          (<code>api.gumroad.com</code>). Only the license key is sent — no
-          conversation data, no browsing data, no personal information from the
-          extension.
-        </p>
-        <p>
-          See
-          <a href="https://gumroad.com/privacy" target="_blank"
-            >Gumroad's Privacy Policy</a
-          >.
-        </p>
-      </div>
-
-      <h2>Permissions Explained</h2>
+      <h2>1. Information We Collect</h2>
+      <h3>1.1. Payment Information</h3>
       <p>
-        We request the minimum permissions necessary. Here's exactly what each
-        one does:
+        When you purchase AI to PDF Pro, payment is processed by Gumroad. We do
+        not store your financial information, but retain subscriber info (email,
+        license key) via Gumroad.
       </p>
+      <h3>1.2. Cookies and Tracking</h3>
+      <p>
+        We gather certain information automatically such as IP addresses,
+        browser type, referring/exit pages, and clickstream data via cookies and
+        log files to improve our Services.
+      </p>
+      <h3>1.3. Conversation Content</h3>
+      <p>
+        We do not store or analyze your conversation content. For all export
+        formats (PDF, DOCX, Markdown), processing is completed entirely locally
+        in your browser. Your content never leaves your device.
+      </p>
+
+      <h2>2. How We Use Information</h2>
+      <ul>
+        <li>Provide, operate, and maintain our Services</li>
+        <li>Improve, personalize, and expand our Services</li>
+        <li>Communicate with you for customer service and updates</li>
+        <li>Process your transactions and prevent fraud</li>
+        <li>Comply with legal requirements</li>
+      </ul>
+
+      <h2>3. How We Share Information</h2>
+      <p>
+        We may share information with vendors and service providers, analytics
+        providers (Google Analytics, Mixpanel), and as required by law. We do
+        not sell your personal data.
+      </p>
+
+      <h2>4. Chrome Extension Permissions</h2>
       <table class="perm-table">
         <thead>
           <tr>
@@ -350,123 +284,75 @@
             <td><code>activeTab</code></td>
             <td>
               To capture content from the page you're viewing when you click
-              Export. Only activates on the current tab, only when you click.
+              Export.
             </td>
           </tr>
           <tr>
             <td><code>scripting</code></td>
             <td>
-              To extract the chat conversation HTML from AI platforms (ChatGPT,
-              Claude, Gemini, etc.) for PDF conversion.
+              To extract chat conversation HTML from AI platforms for PDF
+              conversion.
             </td>
           </tr>
           <tr>
             <td><code>storage</code></td>
             <td>
-              To save your license key and monthly export count locally in your
-              browser. Synced via your Chrome profile, never sent to us.
+              To save your license key and export count locally. Never sent to
+              us.
             </td>
           </tr>
           <tr>
             <td><code>contextMenus</code></td>
-            <td>
-              To add the right-click "Export to PDF" option for quick access.
-            </td>
+            <td>To add the right-click "Export to PDF" option.</td>
           </tr>
           <tr>
+            <td><code>host_permissions</code> — api.gumroad.com</td>
             <td>
-              <code>host_permissions</code><br />
-              <small>api.gumroad.com</small>
-            </td>
-            <td>
-              To verify Pro license keys against Gumroad's payment API. Only the
-              license key is transmitted — nothing else.
+              To verify Pro license keys. Only the license key is transmitted.
             </td>
           </tr>
         </tbody>
       </table>
 
-      <h2>Data Storage</h2>
-      <p>All data is stored locally using Chrome's built-in storage API:</p>
+      <h2>5. Data Retention</h2>
       <ul>
-        <li>
-          <strong>License key</strong> — synced across your Chrome browsers via
-          your Google account (Chrome Sync)
-        </li>
-        <li>
-          <strong>Monthly export count</strong> — stored locally only, resets
-          each month
-        </li>
-        <li>
-          <strong>Temporary export data</strong> — stored locally, overwritten
-          with each new export
-        </li>
+        <li>Temporary export data is overwritten with each new export</li>
+        <li>Uninstalling the extension removes all locally stored data</li>
+        <li>Monthly export counts reset automatically each calendar month</li>
       </ul>
+
+      <h2>6. GDPR Rights</h2>
       <p>
-        We have <strong>no servers, no databases, and no backend</strong>. We
-        literally cannot access your data.
+        If you are in the EEA, you have the right to access, correct, delete, or
+        port your data, and to withdraw consent at any time. Contact
+        <a href="mailto:support@aitopdf.com">support@aitopdf.com</a> to exercise
+        these rights.
       </p>
 
-      <h2>Data Retention</h2>
-      <ul>
-        <li>
-          Temporary export data is overwritten each time you create a new export
-        </li>
-        <li>
-          Uninstalling the extension removes all locally stored data
-          automatically
-        </li>
-        <li>
-          Your license key remains in Chrome Sync until you deactivate it or
-          uninstall
-        </li>
-      </ul>
-
-      <h2>Children's Privacy</h2>
+      <h2>7. Children's Privacy</h2>
       <p>
-        AI to PDF is not directed at children under 13. We do not knowingly
-        collect data from children.
+        AI to PDF does not knowingly collect information from children under 13.
+        Contact us at
+        <a href="mailto:support@aitopdf.com">support@aitopdf.com</a> if you
+        believe a child has provided personal information.
       </p>
 
-      <h2>Your Rights</h2>
-      <p>You can at any time:</p>
-      <ul>
-        <li><strong>Delete all data</strong> by uninstalling the extension</li>
-        <li>
-          <strong>Deactivate your license</strong> from the extension's Settings
-          tab
-        </li>
-        <li>
-          <strong>Clear export data</strong> via Chrome's "Clear browsing data"
-          → Extensions
-        </li>
-      </ul>
-
-      <h2>Changes to This Policy</h2>
+      <h2>8. Changes to This Policy</h2>
       <p>
-        We may update this privacy policy from time to time. Any changes will be
-        posted on this page with an updated "Last updated" date. Continued use
-        of the extension after changes constitutes acceptance of the new policy.
+        We may update this Privacy Policy from time to time. Changes will be
+        posted on our website. Continued use of the Services constitutes
+        acceptance of the updated policy.
       </p>
 
-      <h2>Contact</h2>
-      <p>If you have questions about this privacy policy or the extension:</p>
-      <ul>
-        <li>
-          Email:
-          <a href="mailto:support@aitopdf.com">support@aitopdf.com</a>
-        </li>
-        <li>Website: <a href="https://aitopdf.com">aitopdf.com</a></li>
-      </ul>
+      <h2>Contact Us</h2>
+      <p>Email: <a href="mailto:support@aitopdf.com">support@aitopdf.com</a></p>
     </div>
 
-    <!-- FOOTER -->
     <footer>
       <p>
-        © 2025 AI to PDF · Built with ❤️ ·
-        <a href="mailto:support@aitopdf.com">Support</a> ·
-        <a href="aitopdf-website/privacy.html">Privacy Policy</a> ·
-        <a href="/">Home</a>
+        © 2026 AI to PDF · <a href="mailto:support@aitopdf.com">Support</a> ·
+        <a href="privacy.html">Privacy Policy</a> ·
+        <a href="pricing.html">Pricing</a> · <a href="index.html">Home</a>
       </p>
     </footer>
   </body>
