@@ -136,3 +136,59 @@ if (document.readyState === "loading") {
 } else {
   initApp();
 }
+
+// ============================================
+// Extension Auto-Sync
+// ============================================
+
+// Development ID (from chrome://extensions)
+// Production ID (from Chrome Web Store)
+const EXTENSION_IDS = [
+  'nlkppjdiffagligkihbkfeanfngpckjj',        // ← dev mode ID
+  'your_published_id_here',  // ← Chrome Web Store ID (add later)
+];
+
+async function syncToExtension(email) {
+  for (const id of EXTENSION_IDS) {
+    try {
+      chrome.runtime.sendMessage(id, 
+        { action: 'activate', email: email },
+        (response) => {
+          if (chrome.runtime.lastError) return; // this ID didn't work
+          if (response?.success) {
+            console.log('Extension synced! Plan:', response.plan);
+          }
+        }
+      );
+    } catch {
+      // This ID not available, try next
+    }
+  }
+}
+
+async function desyncExtension() {
+  for (const id of EXTENSION_IDS) {
+    try {
+      chrome.runtime.sendMessage(id, { action: 'deactivate' }, () => {
+        if (chrome.runtime.lastError) return;
+      });
+    } catch {}
+  }
+}
+
+// Auto-sync when user logs in on website
+sb.auth.onAuthStateChange((event, session) => {
+  renderNav(session?.user || null);
+
+  if (event === 'SIGNED_IN' && session?.user?.email) {
+    syncToExtension(session.user.email);
+
+    if (window.location.pathname.includes('login')) {
+      window.location.href = 'account.html';
+    }
+  }
+
+  if (event === 'SIGNED_OUT') {
+    desyncExtension();
+  }
+});
