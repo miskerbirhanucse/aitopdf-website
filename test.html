@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test</title>
+  </head>
+  <body>
+    <h2>API Tests</h2>
+    <button id="test-webhook">Test Webhook</button>
+    <button id="test-verify">Test Verify</button>
+    <button id="test-deactivate">Test Deactivate</button>
+    <pre
+      id="output"
+      style="
+        background: #111;
+        color: #0f0;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+        min-height: 200px;
+      "
+    ></pre>
+
+    <script>
+      const WORKER = "https://shrill-rice-4e6a.miskerbirhanu.workers.dev";
+      const EMAIL = "miskerbirhanu@gmail.com";
+      const output = document.getElementById("output");
+
+      function log(text) {
+        output.textContent += text + "\n";
+      }
+
+      // Test 1: Activate membership
+      document
+        .getElementById("test-webhook")
+        .addEventListener("click", async () => {
+          output.textContent = "";
+          log("Sending webhook (membership_activated)...");
+          try {
+            const res = await fetch(WORKER + "/webhook", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                event: "membership_activated",
+                data: {
+                  email: EMAIL,
+                  plan: { id: "plan_XE5eXD9CL0WAH" },
+                },
+              }),
+            });
+            const text = await res.text();
+            log("Status: " + res.status);
+            log("Response: " + text);
+            log("");
+            log('✅ Now click "Test Verify" to check if plan updated');
+          } catch (e) {
+            log("❌ Error: " + e.message);
+          }
+        });
+
+      // Test 2: Verify plan
+      document
+        .getElementById("test-verify")
+        .addEventListener("click", async () => {
+          output.textContent = "";
+          log("Checking plan for: " + EMAIL);
+          try {
+            const res = await fetch(WORKER + "/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: EMAIL }),
+            });
+            const data = await res.json();
+            log("Status: " + res.status);
+            log("Response: " + JSON.stringify(data, null, 2));
+            if (data.active) {
+              log("");
+              log("✅ User is PRO! Plan: " + data.plan);
+            } else {
+              log("");
+              log("⚠️ User is on FREE plan");
+            }
+          } catch (e) {
+            log("❌ Error: " + e.message);
+          }
+        });
+
+      // Test 3: Deactivate membership
+      document
+        .getElementById("test-deactivate")
+        .addEventListener("click", async () => {
+          output.textContent = "";
+          log("Sending webhook (membership_deactivated)...");
+          try {
+            const res = await fetch(WORKER + "/webhook", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                event: "membership_deactivated",
+                data: { email: EMAIL },
+              }),
+            });
+            const text = await res.text();
+            log("Status: " + res.status);
+            log("Response: " + text);
+            log("");
+            log('✅ Now click "Test Verify" to confirm plan is free');
+          } catch (e) {
+            log("❌ Error: " + e.message);
+          }
+        });
+    </script>
+  </body>
+</html>
