@@ -1,0 +1,12 @@
+.
+├── account.html
+├── index.html
+├── js
+│   └── app.js
+├── login.html
+├── pricing.html
+├── privacy.html
+├── README.md
+└── tree.txt
+
+2 directories, 8 files

@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — AI to PDF</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: #f4f5ff;
+        color: #6868c9;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .login-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 100px 24px 60px;
+      }
+      .login-card {
+        background: white;
+        border-radius: 24px;
+        border: 1.5px solid rgba(26, 59, 255, 0.12);
+        padding: 48px 40px;
+        max-width: 460px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(26, 59, 255, 0.08);
+        text-align: center;
+      }
+      .login-card h1 {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+      .login-subtitle {
+        color: #5a5f80;
+        font-size: 15px;
+        margin-bottom: 8px;
+      }
+      .login-rating {
+        font-size: 14px;
+        margin-bottom: 32px;
+        color: #5a5f80;
+      }
+      .login-rating span {
+        color: #f5a623;
+      }
+
+      /* Google Button */
+      .btn-google {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        padding: 14px;
+        border-radius: 14px;
+        border: none;
+        background: linear-gradient(135deg, #667eea 0%, #5a6fd6 100%);
+        color: white;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.25s;
+        box-shadow: 0 4px 14px rgba(26, 59, 255, 0.3);
+      }
+      .btn-google:hover {
+        box-shadow: 0 8px 25px rgba(26, 59, 255, 0.4);
+        transform: translateY(-1px);
+      }
+      .btn-google img {
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        padding: 2px;
+      }
+
+      /* Divider */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 28px 0;
+        color: #aab;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: rgba(26, 59, 255, 0.1);
+      }
+
+      /* Form */
+      .form-group {
+        text-align: left;
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        font-size: 13px;
+        color: #6868c9;
+        margin-bottom: 6px;
+      }
+      .form-input {
+        width: 100%;
+        padding: 13px 16px;
+        border: 1.5px solid rgba(26, 59, 255, 0.15);
+        border-radius: 12px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        color: #333;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .form-input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+      .code-row {
+        display: flex;
+        gap: 10px;
+      }
+      .code-row .form-input {
+        flex: 1;
+      }
+      .btn-code {
+        padding: 13px 20px;
+        border-radius: 12px;
+        border: none;
+        background: #6868c9;
+        color: white;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.2s;
+      }
+      .btn-code:hover {
+        background: #5a5ab8;
+      }
+      .btn-code:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      /* Login button */
+      .btn-login {
+        width: 100%;
+        padding: 14px;
+        border-radius: 14px;
+        border: none;
+        background: linear-gradient(135deg, #667eea 0%, #5a6fd6 100%);
+        color: white;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.25s;
+        box-shadow: 0 4px 14px rgba(26, 59, 255, 0.3);
+        margin-top: 8px;
+      }
+      .btn-login:hover {
+        box-shadow: 0 8px 25px rgba(26, 59, 255, 0.4);
+        transform: translateY(-1px);
+      }
+      .btn-login:disabled {
+        background: #ccc;
+        box-shadow: none;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Messages */
+      .msg {
+        font-size: 13px;
+        margin-top: 12px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        display: none;
+      }
+      .msg.error {
+        display: block;
+        background: #fff0f0;
+        color: #d44;
+        border: 1px solid #fdd;
+      }
+      .msg.success {
+        display: block;
+        background: #f0fff4;
+        color: #2a7;
+        border: 1px solid #beb;
+      }
+
+      /* Code step hidden by default */
+      .code-step {
+        display: none;
+      }
+      .code-step.visible {
+        display: block;
+      }
+
+      footer {
+        padding: 30px 24px;
+        text-align: center;
+        font-size: 13px;
+        color: #5a5f80;
+        border-top: 1px solid rgba(26, 59, 255, 0.1);
+        background: white;
+      }
+      footer a {
+        color: #667eea;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Nav injected by app.js -->
+
+    <div class="login-wrapper">
+      <div class="login-card">
+        <h1>Log in or sign up</h1>
+        <p class="login-subtitle">Join 80,000+ satisfied users for FREE 🥳</p>
+        <p class="login-rating"><span>⭐⭐⭐⭐⭐</span> 4.8/5</p>
+
+        <!-- GOOGLE LOGIN -->
+        <button class="btn-google" id="google-btn">
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="G"
+          />
+          Log in with Google
+        </button>
+
+        <div class="divider">OR</div>
+
+        <!-- EMAIL STEP -->
+        <div id="email-step">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              class="form-input"
+              placeholder="you@email.com"
+            />
+          </div>
+          <button class="btn-login" id="send-code-btn">
+            Send Verification Code
+          </button>
+        </div>
+
+        <!-- CODE STEP (hidden until code is sent) -->
+        <div id="code-step" class="code-step">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="email-display"
+              class="form-input"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="otp-code">Verification Code</label>
+            <div class="code-row">
+              <input
+                type="text"
+                id="otp-code"
+                class="form-input"
+                placeholder="Enter 6-digit code"
+                maxlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+              />
+              <button class="btn-code" id="resend-btn">Resend</button>
+            </div>
+          </div>
+          <button class="btn-login" id="verify-btn">Log in with Email</button>
+          <button
+            class="btn-code"
+            id="back-btn"
+            style="
+              width: 100%;
+              margin-top: 8px;
+              background: transparent;
+              color: #5a5f80;
+            "
+          >
+            ← Use different email
+          </button>
+        </div>
+
+        <div class="msg" id="msg"></div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        © 2025 AI to PDF · <a href="privacy.html">Privacy Policy</a> ·
+        <a href="index.html">Home</a>
+      </p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/app.js"></script>
+    <script>
+      // --- Elements ---
+      const emailInput = document.getElementById("email");
+      const emailDisplay = document.getElementById("email-display");
+      const otpInput = document.getElementById("otp-code");
+      const sendCodeBtn = document.getElementById("send-code-btn");
+      const verifyBtn = document.getElementById("verify-btn");
+      const resendBtn = document.getElementById("resend-btn");
+      const backBtn = document.getElementById("back-btn");
+      const googleBtn = document.getElementById("google-btn");
+      const emailStep = document.getElementById("email-step");
+      const codeStep = document.getElementById("code-step");
+      const msg = document.getElementById("msg");
+
+      let currentEmail = "";
+
+      // --- Check if already logged in ---
+      (async () => {
+        const {
+          data: { session },
+        } = await sb.auth.getSession();
+        if (session) {
+          window.location.href = "account.html";
+        }
+      })();
+
+      // --- Show message ---
+      function showMsg(text, type = "error") {
+        msg.textContent = text;
+        msg.className = `msg ${type}`;
+      }
+      function clearMsg() {
+        msg.className = "msg";
+        msg.textContent = "";
+      }
+
+      // --- Google Login ---
+      googleBtn.addEventListener("click", async () => {
+        googleBtn.disabled = true;
+        googleBtn.textContent = "Redirecting...";
+
+        const { error } = await sb.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo:
+              window.location.origin +
+              window.location.pathname.replace("login.html", "account.html"),
+          },
+        });
+
+        if (error) {
+          showMsg(error.message);
+          googleBtn.disabled = false;
+          googleBtn.innerHTML =
+            '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" /> Log in with Google';
+        }
+      });
+
+      // --- Send Code ---
+      sendCodeBtn.addEventListener("click", async () => {
+        clearMsg();
+        const email = emailInput.value.trim().toLowerCase();
+
+        if (!email || !email.includes("@")) {
+          showMsg("Please enter a valid email address");
+          return;
+        }
+
+        currentEmail = email;
+        sendCodeBtn.disabled = true;
+        sendCodeBtn.textContent = "Sending...";
+
+        const { error } = await sb.auth.signInWithOtp({
+          email: email,
+          options: { shouldCreateUser: true },
+        });
+
+        if (error) {
+          showMsg(error.message);
+          sendCodeBtn.disabled = false;
+          sendCodeBtn.textContent = "Send Verification Code";
+          return;
+        }
+
+        // Show code input
+        emailStep.style.display = "none";
+        codeStep.classList.add("visible");
+        emailDisplay.value = currentEmail;
+        showMsg("Code sent! Check your email (and spam folder)", "success");
+        otpInput.focus();
+      });
+
+      // --- Verify Code ---
+      verifyBtn.addEventListener("click", async () => {
+        clearMsg();
+        const code = otpInput.value.trim();
+
+        if (!code || code.length < 6) {
+          showMsg("Please enter the 6-digit code");
+          return;
+        }
+
+        verifyBtn.disabled = true;
+        verifyBtn.textContent = "Verifying...";
+
+        const { data, error } = await sb.auth.verifyOtp({
+          email: currentEmail,
+          token: code,
+          type: "email",
+        });
+
+        if (error) {
+          showMsg(error.message);
+          verifyBtn.disabled = false;
+          verifyBtn.textContent = "Log in with Email";
+          return;
+        }
+
+        // Success — redirect
+        showMsg("Logged in! Redirecting...", "success");
+        window.location.href = "account.html";
+      });
+
+      // --- Resend Code ---
+      resendBtn.addEventListener("click", async () => {
+        clearMsg();
+        resendBtn.disabled = true;
+        resendBtn.textContent = "Sent!";
+
+        await sb.auth.signInWithOtp({
+          email: currentEmail,
+          options: { shouldCreateUser: true },
+        });
+
+        showMsg("New code sent!", "success");
+        setTimeout(() => {
+          resendBtn.disabled = false;
+          resendBtn.textContent = "Resend";
+        }, 30000); // 30 second cooldown
+      });
+
+      // --- Back to email ---
+      backBtn.addEventListener("click", () => {
+        clearMsg();
+        codeStep.classList.remove("visible");
+        emailStep.style.display = "block";
+        sendCodeBtn.disabled = false;
+        sendCodeBtn.textContent = "Send Verification Code";
+        otpInput.value = "";
+      });
+
+      // --- Enter key support ---
+      emailInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendCodeBtn.click();
+      });
+      otpInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") verifyBtn.click();
+      });
+    </script>
+  </body>
+</html>

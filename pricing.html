@@ -8,8 +8,11 @@
       name="description"
       content="Choose your AI to PDF plan. Free, Monthly, or Annual."
     />
-    <link rel="icon" href="" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       :root {
@@ -67,11 +70,6 @@
         font-weight: 800;
         font-size: 20px;
         color: var(--ink);
-      }
-      .nav-logo img {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
       }
       .nav-links {
         display: flex;
@@ -210,7 +208,6 @@
         margin: 0 auto;
         align-items: start;
       }
-
       .plan-card {
         background: white;
         border-radius: 24px;
@@ -227,14 +224,13 @@
       .plan-card.featured {
         background: var(--ink);
         color: white;
-        border-color: var(--blue);
+        border-color: var(--primary);
         box-shadow: var(--shadow);
         transform: scale(1.04);
       }
       .plan-card.featured:hover {
         transform: scale(1.04) translateY(-6px);
       }
-
       .popular-badge {
         position: absolute;
         top: -14px;
@@ -251,7 +247,6 @@
         white-space: nowrap;
         box-shadow: 0 4px 14px rgba(26, 59, 255, 0.4);
       }
-
       .plan-name {
         font-family: "Syne", sans-serif;
         font-weight: 700;
@@ -264,7 +259,6 @@
       .plan-card.featured .plan-name {
         color: rgba(255, 255, 255, 0.55);
       }
-
       .plan-price {
         display: flex;
         align-items: baseline;
@@ -301,7 +295,6 @@
       .plan-card.featured .price-note {
         color: rgba(255, 255, 255, 0.4);
       }
-
       .plan-divider {
         height: 1px;
         background: rgba(0, 0, 0, 0.06);
@@ -310,7 +303,6 @@
       .plan-card.featured .plan-divider {
         background: rgba(148, 160, 216, 0.1);
       }
-
       .feature-list {
         list-style: none;
         margin-bottom: 32px;
@@ -391,11 +383,11 @@
       }
       .btn-free {
         background: var(--off);
-        color: var(--blue);
+        color: var(--primary);
         border: 1.5px solid var(--border);
       }
       .btn-free:hover {
-        background: var(--blue-light);
+        background: #e8eaff;
       }
       .btn-pro {
         background: var(--grad);
@@ -415,7 +407,7 @@
         background: rgba(255, 255, 255, 0.9);
       }
 
-      /* ── FEATURE COMPARISON ── */
+      /* ── COMPARISON TABLE ── */
       .compare-section {
         padding: 0 24px 80px;
       }
@@ -520,7 +512,7 @@
         padding: 0 24px 80px;
       }
       .faq-section h2 {
-        font-family: "Syne";
+        font-family: "Syne", sans-serif;
         font-size: 32px;
         font-weight: 800;
         text-align: center;
@@ -561,30 +553,8 @@
         background: white;
       }
       footer a {
-        color: var(--blue);
+        color: var(--primary);
         text-decoration: none;
-      }
-
-      /* ── HIDDEN PRICES ── */
-      .monthly-price,
-      .annual-price {
-        display: none;
-      }
-      .show-monthly .monthly-price {
-        display: block;
-      }
-      .show-annual .annual-price {
-        display: block;
-      }
-      .show-monthly .monthly-price-inline {
-        display: inline;
-      }
-      .show-annual .annual-price-inline {
-        display: inline;
-      }
-      .monthly-price-inline,
-      .annual-price-inline {
-        display: none;
       }
 
       @media (max-width: 768px) {
@@ -614,17 +584,19 @@
     </style>
   </head>
   <body>
-    <nav>
+    <!-- ── NAV ── -->
+    <!-- <nav>
       <div class="nav-inner">
-        <a href="index.html" class="nav-logo"> AI to PDF </a>
+        <a href="index.html" class="nav-logo">AI to PDF</a>
         <div class="nav-links">
-          <a href="pricing.html#features">Features</a>
-          <a href="pricing.html#faq">FAQ</a>
+          <a href="#features">Features</a>
+          <a href="#faq">FAQ</a>
           <a href="#" class="nav-cta">Install Free →</a>
         </div>
       </div>
-    </nav>
+    </nav> -->
 
+    <!-- ── HERO ── -->
     <section class="hero">
       <div class="hero-eyebrow">⚡ Upgrade Your Workflow</div>
       <h1>Simple Plans,<br /><em>Powerful Results</em></h1>
@@ -632,8 +604,20 @@
         Start free forever. Upgrade when you need unlimited exports and premium
         templates.
       </p>
+
+      <!-- FIXED: Toggle buttons now actually exist -->
+      <div class="billing-toggle">
+        <button class="toggle-btn active" onclick="setBilling('monthly', this)">
+          Monthly
+        </button>
+        <button class="toggle-btn" onclick="setBilling('annual', this)">
+          Annual
+          <span class="save-badge">Save 44%</span>
+        </button>
+      </div>
     </section>
 
+    <!-- ── PLANS ── -->
     <section class="plans-section" id="plansSection">
       <div class="plans-grid">
         <!-- FREE -->
@@ -684,7 +668,7 @@
           <a href="#" class="plan-btn btn-free">Install Free</a>
         </div>
 
-        <!-- PRO MONTHLY / ANNUAL (featured) -->
+        <!-- PRO (featured) -->
         <div class="plan-card featured">
           <div class="popular-badge">⭐ Most Popular</div>
           <div class="plan-name">Pro</div>
@@ -702,12 +686,11 @@
           <!-- Annual price -->
           <div class="annual-show" style="display: none">
             <div class="plan-price">
-              <span class="price-amount">$24</span>
+              <span class="price-amount">$1</span
+              ><span class="price-cents">.99</span>
             </div>
-            <div class="price-period">per year</div>
-            <div class="price-note">
-              Just $2 / month · save $11.88 vs monthly
-            </div>
+            <div class="price-period">per month</div>
+            <div class="price-note">Billed $24 / year · save $11.88</div>
           </div>
 
           <div class="plan-divider"></div>
@@ -752,56 +735,62 @@
             </li>
           </ul>
 
+          <!-- WHOP CHECKOUT LINKS — replace plan_XXXXX with your actual plan IDs -->
           <div class="monthly-show">
             <a
-              href="https://digixpress3.gumroad.com/l/aitopdf-pro-monthly?wanted=true"
-              class="plan-btn btn-pro gumroad-button"
-              >Get Pro Monthly →</a
+              href="https://whop.com/checkout/plan_Pfx6bjbFrkuTs"
+              target="_blank"
+              class="plan-btn btn-pro"
             >
+              Get Pro Monthly →
+            </a>
           </div>
           <div class="annual-show" style="display: none">
             <a
-              href="https://digixpress3.gumroad.com/l/aitopdf-pro-annual?wanted=true"
-              class="plan-btn btn-annual"
-              >Get Pro Annual →</a
+              href="https://whop.com/checkout/plan_tdnUU9o8Pydwo"
+              target="_blank"
+              class="plan-btn btn-pro"
             >
+              Get Pro Annual →
+            </a>
           </div>
         </div>
 
-        <!-- TEAMS (placeholder / coming soon) -->
+        <!-- ANNUAL STANDALONE -->
         <div class="plan-card">
           <div class="plan-name">Annual</div>
-
-          <div class="monthly-show">
-            <div class="plan-price">
-              <span class="price-amount">$23</span
-              ><span class="price-cents">.99</span>
-            </div>
-            <div class="price-period">per year</div>
-            <div class="price-note">Billed yearly · cancel anytime</div>
+          <div class="plan-price">
+            <span class="price-amount">$24</span>
           </div>
-
-          <div class="price-period">&nbsp;</div>
-          <div class="price-note">Launching Q3 2025</div>
+          <div class="price-period">per year</div>
+          <div class="price-note">Just $2/mo · best value</div>
           <div class="plan-divider"></div>
           <ul class="feature-list">
             <li>
               <span class="feat-check">✓</span
               ><span class="feat-text">Everything in Pro</span>
             </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">Locked-in price</span>
+            </li>
+            <li>
+              <span class="feat-check">✓</span
+              ><span class="feat-text">Save $11.88 vs monthly</span>
+            </li>
           </ul>
-          <div class="monthly-show">
-            <a
-              href="https://digixpress3.gumroad.com/l/aitopdf-pro-yearly?wanted=true"
-              class="plan-btn btn-pro gumroad-button"
-              >Get Pro Yearly →</a
-            >
-          </div>
+          <a
+            href="https://whop.com/checkout/plan_tdnUU9o8Pydwo"
+            target="_blank"
+            class="plan-btn btn-pro"
+          >
+            Get Pro Annual →
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- COMPARISON TABLE -->
+    <!-- ── COMPARISON TABLE ── -->
     <section class="compare-section" id="features">
       <h2>Full Feature Comparison</h2>
       <div class="compare-table">
@@ -811,115 +800,92 @@
               <th>Feature</th>
               <th>Free</th>
               <th class="highlight">Pro</th>
-              <th>Teams</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Monthly exports</td>
-              <td>5</td>
+              <td>Daily exports</td>
+              <td>3</td>
               <td class="highlight" style="font-weight: 700; color: #1a3bff">
                 Unlimited
               </td>
-              <td>Unlimited</td>
             </tr>
             <tr>
               <td>AI platforms (ChatGPT, Claude, Gemini…)</td>
               <td><span class="tick">✓</span></td>
               <td class="highlight"><span class="tick">✓</span></td>
-              <td><span class="tick">✓</span></td>
             </tr>
             <tr>
               <td>Code syntax highlighting</td>
               <td><span class="tick">✓</span></td>
               <td class="highlight"><span class="tick">✓</span></td>
-              <td><span class="tick">✓</span></td>
             </tr>
             <tr>
               <td>Basic template</td>
               <td><span class="tick">✓</span></td>
               <td class="highlight"><span class="tick">✓</span></td>
-              <td><span class="tick">✓</span></td>
             </tr>
             <tr>
               <td>Premium templates (10+)</td>
               <td><span class="cross">✗</span></td>
               <td class="highlight"><span class="tick">✓</span></td>
-              <td><span class="tick">✓</span></td>
             </tr>
             <tr>
               <td>No watermark</td>
               <td><span class="cross">✗</span></td>
               <td class="highlight"><span class="tick">✓</span></td>
-              <td><span class="tick">✓</span></td>
             </tr>
             <tr>
               <td>Custom headers &amp; footers</td>
               <td><span class="cross">✗</span></td>
               <td class="highlight"><span class="tick">✓</span></td>
-              <td><span class="tick">✓</span></td>
             </tr>
             <tr>
               <td>Edit title &amp; metadata</td>
               <td><span class="cross">✗</span></td>
               <td class="highlight"><span class="tick">✓</span></td>
-              <td><span class="tick">✓</span></td>
-            </tr>
-            <tr>
-              <td>Shared team workspace</td>
-              <td><span class="cross">✗</span></td>
-              <td class="highlight"><span class="cross">✗</span></td>
-              <td><span class="tick">✓</span></td>
-            </tr>
-            <tr>
-              <td>Custom branding / logo</td>
-              <td><span class="cross">✗</span></td>
-              <td class="highlight"><span class="cross">✗</span></td>
-              <td><span class="tick">✓</span></td>
             </tr>
             <tr>
               <td>Priority support</td>
               <td><span class="cross">✗</span></td>
               <td class="highlight"><span class="tick">✓</span></td>
-              <td><span class="tick">✓</span></td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- GUARANTEE -->
-    <!-- <div style="padding: 0 24px">
+    <!-- ── GUARANTEE ── -->
+    <div style="padding: 0 24px">
       <div class="guarantee">
         <div class="guarantee-icon">🛡️</div>
         <div>
           <h3>3-Day Money-Back Guarantee</h3>
           <p>
-            Not happy within 7 days? Email us at
+            Not happy within 3 days? Email us at
             <a href="mailto:support@aitopdf.com">support@aitopdf.com</a> and
-            we'll refund you in full — no questions asked. Your satisfaction is
-            our priority.
+            we'll refund you in full — no questions asked.
           </p>
         </div>
       </div>
-    </div> -->
+    </div>
 
-    <!-- FAQ -->
+    <!-- ── FAQ (updated — no more Gumroad/license mentions) ── -->
     <section class="faq-section" id="faq">
       <h2>Pricing FAQ</h2>
       <div class="faq-grid">
         <div class="faq-item">
           <h4>Can I cancel anytime?</h4>
           <p>
-            Yes. Cancel from your Gumroad account at any time. You keep Pro
-            access until the end of your billing period.
+            Yes. Cancel from your account at any time. You keep Pro access until
+            the end of your billing period.
           </p>
         </div>
         <div class="faq-item">
-          <h4>How do I activate my license?</h4>
+          <h4>How do I activate Pro?</h4>
           <p>
-            After purchase, you'll receive a license key by email. Open the
-            extension → Settings → paste the key → Activate. Done.
+            After purchase, open the extension and enter the email you used to
+            purchase. That's it — instant activation.
           </p>
         </div>
         <div class="faq-item">
@@ -932,8 +898,8 @@
         <div class="faq-item">
           <h4>Does the annual plan auto-renew?</h4>
           <p>
-            Yes, annually. You can cancel renewal anytime from Gumroad before
-            the next billing date.
+            Yes, annually. You can cancel renewal anytime before the next
+            billing date.
           </p>
         </div>
         <div class="faq-item">
@@ -947,8 +913,9 @@
           <h4>Do you offer student or team discounts?</h4>
           <p>
             Email us at
-            <a href="mailto:support@aitopdf.com">support@aitopdf.com</a> — we're
-            happy to work something out for students, nonprofits, and teams.
+            <a href="mailto:support@aitopdf.com">support@aitopdf.com</a>
+            — we're happy to work something out for students, nonprofits, and
+            teams.
           </p>
         </div>
       </div>
@@ -956,29 +923,20 @@
 
     <footer>
       <p>
-        © 2026 AI to PDF · <a href="mailto:support@aitopdf.com">Support</a> ·
-        <a href="privacy.html">Privacy Policy</a> · <a href="#">Terms</a> ·
+        © 2025 AI to PDF ·
+        <a href="mailto:support@aitopdf.com">Support</a> ·
+        <a href="privacy.html">Privacy Policy</a> ·
         <a href="index.html">Home</a>
       </p>
     </footer>
+    <!-- Add these before </body> on EVERY page -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/app.js"></script>
 
-    <script src="https://gumroad.com/js/gumroad.js"></script>
+  
+
+    <!-- Tawk.to chat -->
     <script>
-      function setBilling(mode, btn) {
-        document
-          .querySelectorAll(".toggle-btn")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        const isAnnual = mode === "annual";
-        document
-          .querySelectorAll(".monthly-show")
-          .forEach((el) => (el.style.display = isAnnual ? "none" : "block"));
-        document
-          .querySelectorAll(".annual-show")
-          .forEach((el) => (el.style.display = isAnnual ? "block" : "none"));
-      }
-    </script>
-    <script type="text/javascript">
       var Tawk_API = Tawk_API || {},
         Tawk_LoadStart = new Date();
       (function () {

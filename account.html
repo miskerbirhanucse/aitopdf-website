@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account — AI to PDF</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: #f4f5ff;
+        color: #6868c9;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .account-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 100px 24px 60px;
+      }
+      .account-card {
+        background: white;
+        border-radius: 24px;
+        border: 1.5px solid rgba(26, 59, 255, 0.12);
+        padding: 48px 40px;
+        max-width: 520px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(26, 59, 255, 0.08);
+        text-align: center;
+      }
+
+      /* Avatar */
+      .avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #5a6fd6 100%);
+        color: white;
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+      }
+      .avatar img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .user-name {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 24px;
+        margin-bottom: 4px;
+        color: #333;
+      }
+      .user-email {
+        color: #5a5f80;
+        font-size: 14px;
+        margin-bottom: 32px;
+      }
+
+      /* Plan Box */
+      .plan-box {
+        background: #f4f5ff;
+        border-radius: 16px;
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        border: 1px solid rgba(26, 59, 255, 0.08);
+      }
+      .plan-label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #5a5f80;
+      }
+      .plan-value {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 16px;
+      }
+      .plan-free {
+        color: #5a5f80;
+      }
+      .plan-pro {
+        color: #667eea;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Upgrade box */
+      .upgrade-box {
+        background: linear-gradient(135deg, #667eea 0%, #5a6fd6 100%);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        color: white;
+      }
+      .upgrade-box h3 {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 6px;
+      }
+      .upgrade-box p {
+        font-size: 13px;
+        opacity: 0.85;
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+      .btn-upgrade {
+        display: inline-block;
+        padding: 12px 28px;
+        background: white;
+        color: #667eea;
+        border-radius: 12px;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none;
+        transition: transform 0.2s;
+      }
+      .btn-upgrade:hover {
+        transform: translateY(-2px);
+      }
+
+      /* Action buttons */
+      .actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 24px;
+      }
+      .btn-action {
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .btn-manage {
+        background: #f4f5ff;
+        color: #6868c9;
+        border: 1.5px solid rgba(26, 59, 255, 0.15);
+      }
+      .btn-manage:hover {
+        background: #e8eaff;
+      }
+      .btn-logout {
+        background: transparent;
+        color: #d44;
+        border: 1.5px solid #fdd;
+      }
+      .btn-logout:hover {
+        background: #fff5f5;
+      }
+
+      /* Loading */
+      .loading {
+        padding: 60px;
+        text-align: center;
+        color: #5a5f80;
+      }
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(26, 59, 255, 0.1);
+        border-top-color: #667eea;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 16px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      footer {
+        padding: 30px 24px;
+        text-align: center;
+        font-size: 13px;
+        color: #5a5f80;
+        border-top: 1px solid rgba(26, 59, 255, 0.1);
+        background: white;
+      }
+      footer a {
+        color: #667eea;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Nav injected by app.js -->
+
+    <div class="account-wrapper">
+      <div class="account-card">
+        <!-- Loading state -->
+        <div id="loading" class="loading">
+          <div class="loading-spinner"></div>
+          <p>Loading your account...</p>
+        </div>
+
+        <!-- Account content (hidden until loaded) -->
+        <div id="account-content" style="display: none">
+          <!-- Avatar -->
+          <div class="avatar" id="avatar">?</div>
+          <h2 class="user-name" id="user-name">—</h2>
+          <p class="user-email" id="user-email">—</p>
+
+          <!-- Plan Status -->
+          <div class="plan-box">
+            <span class="plan-label">Your current plan:</span>
+            <span class="plan-value" id="plan-value">—</span>
+          </div>
+
+          <!-- Upgrade Box (shown only for free users) -->
+          <div class="upgrade-box" id="upgrade-box">
+            <h3>Unlock Pro ⚡</h3>
+            <p>Unlimited exports, premium templates, no watermark, and more.</p>
+            <a href="pricing.html" class="btn-upgrade">View Plans →</a>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions">
+            <a
+              href="https://whop.com/billing/"
+              target="_blank"
+              class="btn-action btn-manage"
+              id="manage-btn"
+              style="display: none"
+            >
+              Manage Billing
+            </a>
+            <button class="btn-action btn-logout" id="logout-btn">
+              Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        © 2025 AI to PDF · <a href="privacy.html">Privacy Policy</a> ·
+        <a href="index.html">Home</a>
+      </p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/app.js"></script>
+    <script>
+      const WHOP_MONTHLY_CHECKOUT =
+        "https://whop.com/checkout/plan_XE5eXD9CL0WAH";
+      const WHOP_ANNUAL_CHECKOUT =
+        "https://whop.com/checkout/plan_e2lSrOdrx4vda";
+
+      const loading = document.getElementById("loading");
+      const content = document.getElementById("account-content");
+      const avatarEl = document.getElementById("avatar");
+      const nameEl = document.getElementById("user-name");
+      const emailEl = document.getElementById("user-email");
+      const planEl = document.getElementById("plan-value");
+      const upgradeBox = document.getElementById("upgrade-box");
+      const manageBtn = document.getElementById("manage-btn");
+      const logoutBtn = document.getElementById("logout-btn");
+
+      async function loadAccount() {
+        const {
+          data: { session },
+        } = await sb.auth.getSession();
+
+        // Not logged in — redirect to login
+        if (!session) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        const user = session.user;
+
+        // Get profile from database
+        const { data: profile } = await sb
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+
+        const plan = profile?.plan || "free";
+        const name =
+          profile?.full_name ||
+          user.user_metadata?.full_name ||
+          user.user_metadata?.name ||
+          user.email.split("@")[0];
+        const email = user.email;
+        const avatarUrl =
+          user.user_metadata?.avatar_url || user.user_metadata?.picture;
+
+        // --- Render ---
+        // Avatar
+        if (avatarUrl) {
+          avatarEl.innerHTML = `<img src="${avatarUrl}" alt="avatar" />`;
+        } else {
+          avatarEl.textContent = name.charAt(0).toUpperCase();
+        }
+
+        // Name & Email
+        nameEl.textContent = name;
+        emailEl.textContent = email;
+
+        // Plan
+        const planLabels = {
+          free: "Free",
+          pro_monthly: "Pro Monthly",
+          pro_annual: "Pro Annual",
+        };
+        planEl.textContent = planLabels[plan] || "Free";
+        planEl.className = `plan-value ${plan === "free" ? "plan-free" : "plan-pro"}`;
+
+        // Show/hide upgrade box
+        if (plan !== "free") {
+          upgradeBox.style.display = "none";
+          manageBtn.style.display = "inline-block";
+        } else {
+          // Add user email to checkout URL so Whop knows who they are
+          const upgradeLink = upgradeBox.querySelector(".btn-upgrade");
+          upgradeLink.href = "pricing.html";
+        }
+
+        // Show content
+        loading.style.display = "none";
+        content.style.display = "block";
+      }
+
+      // --- Logout ---
+      logoutBtn.addEventListener("click", async () => {
+        await sb.auth.signOut();
+        window.location.href = "index.html";
+      });
+
+      // --- Init ---
+      loadAccount();
+    </script>
+  </body>
+</html>
