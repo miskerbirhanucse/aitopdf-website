@@ -1,113 +1,136 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Test</title>
-  </head>
-  <body>
-    <h2>API Tests</h2>
-    <button id="test-webhook">Test Webhook</button>
-    <button id="test-verify">Test Verify</button>
-    <button id="test-deactivate">Test Deactivate</button>
-    <pre
-      id="output"
-      style="
-        background: #111;
-        color: #0f0;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 8px;
-        min-height: 200px;
-      "
-    ></pre>
+<head><title>Test</title></head>
+<body>
+  <h2>API Tests</h2>
+  <button id="test-webhook">1. Test Webhook (Activate)</button>
+  <button id="test-verify">2. Test Verify</button>
+  <button id="test-deactivate">3. Test Deactivate</button>
+  <button id="test-direct">4. Debug: Check Supabase Directly</button>
+  <pre id="output" style="background:#111;color:#0f0;padding:20px;margin-top:20px;border-radius:8px;min-height:300px;font-size:13px;"></pre>
 
-    <script>
-      const WORKER = "https://shrill-rice-4e6a.miskerbirhanu.workers.dev";
-      const EMAIL = "yafettpap@gmail.com";
-      const output = document.getElementById("output");
+  <script>
+    const WORKER = 'https://shrill-rice-4e6a.miskerbirhanu.workers.dev';
+    const EMAIL = 'yafettpap@gmail.com';
 
-      function log(text) {
-        output.textContent += text + "\n";
-      }
+    // PUT YOUR SUPABASE VALUES HERE
+    const SUPABASE_URL = 'https://vbynrwuryougpglzrehh.supabase.co';  // ← replace
+    const SUPABASE_ANON_KEY = 'sb_publishable_mrpCSzCRyyDX1RjJ20Xt1A_V9iWmfqQ';                // ← replace
 
-      // Test 1: Activate membership
-      document
-        .getElementById("test-webhook")
-        .addEventListener("click", async () => {
-          output.textContent = "";
-          log("Sending webhook (membership_activated)...");
-          try {
-            const res = await fetch(WORKER + "/webhook", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                event: "membership_activated",
-                data: {
-                  email: EMAIL,
-                  plan: { id: "plan_XE5eXD9CL0WAH" },
-                },
-              }),
-            });
-            const text = await res.text();
-            log("Status: " + res.status);
-            log("Response: " + text);
-            log("");
-            log('✅ Now click "Test Verify" to check if plan updated');
-          } catch (e) {
-            log("❌ Error: " + e.message);
-          }
-        });
+    const output = document.getElementById('output');
+    function log(text) { output.textContent += text + '\n'; }
 
-      // Test 2: Verify plan
-      document
-        .getElementById("test-verify")
-        .addEventListener("click", async () => {
-          output.textContent = "";
-          log("Checking plan for: " + EMAIL);
-          try {
-            const res = await fetch(WORKER + "/verify", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: EMAIL }),
-            });
-            const data = await res.json();
-            log("Status: " + res.status);
-            log("Response: " + JSON.stringify(data, null, 2));
-            if (data.active) {
-              log("");
-              log("✅ User is PRO! Plan: " + data.plan);
-            } else {
-              log("");
-              log("⚠️ User is on FREE plan");
+    // Test 1: Activate
+    document.getElementById('test-webhook').addEventListener('click', async () => {
+      output.textContent = '';
+      log('Sending webhook (membership_activated)...');
+      try {
+        const res = await fetch(WORKER + '/webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'membership_activated',
+            data: {
+              email: EMAIL,
+              plan: { id: 'plan_XE5eXD9CL0WAH' }
             }
-          } catch (e) {
-            log("❌ Error: " + e.message);
-          }
+          })
         });
+        const text = await res.text();
+        log('Status: ' + res.status);
+        log('Response: ' + text);
+        log('');
+        log('Now click "Test Verify" or "Debug: Check Supabase"');
+      } catch (e) { log('Error: ' + e.message); }
+    });
 
-      // Test 3: Deactivate membership
-      document
-        .getElementById("test-deactivate")
-        .addEventListener("click", async () => {
-          output.textContent = "";
-          log("Sending webhook (membership_deactivated)...");
-          try {
-            const res = await fetch(WORKER + "/webhook", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                event: "membership_deactivated",
-                data: { email: EMAIL },
-              }),
-            });
-            const text = await res.text();
-            log("Status: " + res.status);
-            log("Response: " + text);
-            log("");
-            log('✅ Now click "Test Verify" to confirm plan is free');
-          } catch (e) {
-            log("❌ Error: " + e.message);
-          }
+    // Test 2: Verify via worker
+    document.getElementById('test-verify').addEventListener('click', async () => {
+      output.textContent = '';
+      log('Checking plan via Worker...');
+      try {
+        const res = await fetch(WORKER + '/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: EMAIL })
         });
-    </script>
-  </body>
+        const data = await res.json();
+        log('Response: ' + JSON.stringify(data, null, 2));
+        log(data.active ? '✅ PRO!' : '⚠️ Still FREE');
+      } catch (e) { log('Error: ' + e.message); }
+    });
+
+    // Test 3: Deactivate
+    document.getElementById('test-deactivate').addEventListener('click', async () => {
+      output.textContent = '';
+      log('Sending deactivation...');
+      try {
+        const res = await fetch(WORKER + '/webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'membership_deactivated',
+            data: { email: EMAIL }
+          })
+        });
+        log('Status: ' + res.status);
+        log('Response: ' + await res.text());
+      } catch (e) { log('Error: ' + e.message); }
+    });
+
+    // Test 4: Check Supabase directly
+    document.getElementById('test-direct').addEventListener('click', async () => {
+      output.textContent = '';
+      log('Checking Supabase directly...');
+      log('Email: ' + EMAIL);
+      log('');
+
+      try {
+        // Get ALL profiles
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/profiles?select=id,email,plan,full_name`,
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            }
+          }
+        );
+        const profiles = await res.json();
+        log('Total profiles found: ' + (Array.isArray(profiles) ? profiles.length : 'ERROR'));
+        log('');
+
+        if (Array.isArray(profiles) && profiles.length > 0) {
+          profiles.forEach((p, i) => {
+            log(`Profile ${i + 1}:`);
+            log('  ID:    ' + p.id);
+            log('  Email: ' + p.email);
+            log('  Name:  ' + p.full_name);
+            log('  Plan:  ' + p.plan);
+            log('');
+          });
+
+          // Check if email matches
+          const match = profiles.find(p => p.email === EMAIL);
+          if (match) {
+            log('✅ Found matching profile!');
+            log('   Current plan: ' + match.plan);
+          } else {
+            log('❌ No profile with email: ' + EMAIL);
+            log('   Emails in DB: ' + profiles.map(p => p.email).join(', '));
+            log('');
+            log('   This is why the webhook cant update!');
+            log('   The email in the DB doesnt match.');
+          }
+        } else {
+          log('❌ No profiles in database at all!');
+          log('   Raw response: ' + JSON.stringify(profiles));
+          log('');
+          log('   Did you run the SQL query in Supabase?');
+          log('   Did you sign up / login on login.html?');
+        }
+      } catch (e) { log('Error: ' + e.message); }
+    });
+  </script>
+</body>
 </html>
